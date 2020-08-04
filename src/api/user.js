@@ -19,14 +19,14 @@ import ajax from '@/utils/request'
 const login = (paramsObj) => {
   return ajax({
     method: 'post', // 接口请求的方式
-    url: '/v1_0/authorizations', // 接口的地址
+    url: '/app/v1_0/authorizations', // 接口的地址
     data: paramsObj
   })
 }
 const getProfile = () => {
   return ajax({
     method: 'get',
-    url: '/v1_0/user/profile'
+    url: '/app/v1_0/user/profile'
   })
 }
 export { login, getProfile }

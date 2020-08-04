@@ -7,7 +7,7 @@ import axios from 'axios'
 import store from '@/store'
 const instance = axios.create({
   // 后端服务器1
-  baseURL: 'http://ttapi.research.itcast.cn/app'
+  baseURL: 'http://ttapi.research.itcast.cn'
   // baseURL: 'http://api-toutiao-web.itheima.net'
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}

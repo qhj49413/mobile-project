@@ -6,7 +6,7 @@
     />
 
     <!-- 表单区域 -->
-    <van-form>
+    <van-form @submit="userLogin">
       <!-- 输入手机号，调起手机号键盘 -->
       <van-field type="tel"
       label="手机号"
@@ -26,10 +26,10 @@
       placeholder="请输入密码"/>
       <!-- 按钮 -->
       <div class="btn-wrap">
-        <van-button type="info" class="button" @click="userLogin">登陆</van-button>
+        <van-button type="info" class="button">登陆</van-button>
       </div>
     </van-form>
-    <p>获取个人信息</p>
+    <p>获取个人信息{{$store.state.tokenInfo.token ? '获取成功' : '获取失败'}}</p>
     <van-button type="info" @click="hGetProfile">获取个人用户信息</van-button>
 
   </div>
