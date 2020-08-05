@@ -89,6 +89,7 @@ export default {
         // 会在3s之后关闭
         // todo 登陆成功，跳转
         this.$toast.success('登陆成功')
+        this.$router.push('/')
       } catch (err) {
         console.log(err)
         this.$toast.fail('登陆失败')

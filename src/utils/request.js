@@ -2,12 +2,21 @@
 //    axios本身是一个独立的库，是对ajax的封装。为了方便在项目中使用，我们对它再次封装
 // (1) 接口基地址
 // (2) 请求，响应拦截器
-
 import axios from 'axios'
 import store from '@/store'
+const JSONbig = require('json-bigint')
+
 const instance = axios.create({
   // 后端服务器1
-  baseURL: 'http://ttapi.research.itcast.cn'
+  baseURL: 'http://ttapi.research.itcast.cn',
+  transformResponse: [function (data) {
+    // 对 data 进行任意转换处理
+    try {
+      return JSONbig.parse(data)
+    } catch (e) {
+      return data
+    }
+  }]
   // baseURL: 'http://api-toutiao-web.itheima.net'
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}

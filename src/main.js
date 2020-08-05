@@ -12,6 +12,7 @@ import '@/styles/index.less'
 import { relativeFormat } from '@/utils/date-time'
 Vue.use(Vant)
 Vue.use(Lazyload)
+Vue.prototype.$eventbus = new Vue()
 Vue.config.productionTip = false
 Vue.filter('relativeFormat', function (val) {
   return relativeFormat(val)
