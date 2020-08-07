@@ -13,6 +13,11 @@ export default new Vuex.Store({
       setItem('tokenInfo', tokenObj)
     }
   },
+  getters: {
+    isLogin (state) {
+      return state.tokenInfo.token
+    }
+  },
   actions: {
   },
   modules: {

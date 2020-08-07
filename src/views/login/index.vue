@@ -29,8 +29,6 @@
         <van-button type="info" class="button">登陆</van-button>
       </div>
     </van-form>
-    <p>获取个人信息{{$store.state.tokenInfo.token ? '获取成功' : '获取失败'}}</p>
-    <van-button type="info" @click="hGetProfile">获取个人用户信息</van-button>
 
   </div>
 </template>

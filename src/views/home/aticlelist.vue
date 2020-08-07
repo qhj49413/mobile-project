@@ -18,7 +18,7 @@
             <span>{{item.aut_name}}</span>
             <span>{{item.comm_count}}评论</span>
             <span>{{item.pubdate | relativeFormat}}</span>
-            <van-icon name="cross" v-if="$store.state.tokenInfo.token" @click="popup(item.art_id.toString())"/>
+            <van-icon name="cross" v-if="$store.getters.isLogin" @click="popup(item.art_id.toString())"/>
           </div>
         </div>
       </van-cell>
@@ -42,6 +42,7 @@ export default {
       timestamp: null
     }
   },
+
   created () {
     this.$eventbus.$on('delArticle', (data) => {
       const { articleId, channelId } = data
