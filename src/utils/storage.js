@@ -1,10 +1,10 @@
 const setItem = (name, token) => {
   window.sessionStorage.setItem(name, JSON.stringify(token))
 }
-const getItem = () => {
-  return JSON.parse(window.sessionStorage.getItem('tokenInfo'))
+const getItem = (name) => {
+  return JSON.parse(window.sessionStorage.getItem(name))
 }
-const revItem = () => {
-  window.sessionStorage.removeItem('tokenInfo')
+const revItem = (name) => {
+  window.sessionStorage.removeItem(name)
 }
 export { setItem, getItem, revItem }

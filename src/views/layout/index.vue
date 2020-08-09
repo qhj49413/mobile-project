@@ -4,7 +4,14 @@
   <van-nav-bar fixed>
     <div slot="left" class="logo"></div>
     title
-    <van-button class="search-btn" slot="right" icon="search" round type="info" size="small">搜索</van-button>
+    <van-button
+    class="search-btn"
+    slot="right"
+    icon="search"
+    round
+    type="info"
+    @click="$router.push('/search')"
+    size="small">搜索</van-button>
   </van-nav-bar>
 <!-- 中间二级路由区域 -->
 <router-view></router-view>
