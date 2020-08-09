@@ -31,9 +31,10 @@
       <van-cell :title="item"
         v-for="(item, idx) in historySech"
         :key="idx"
+        @click="$router.push(`/search/result?keyword=${item}`)"
       >
         <span slot="right-icon">
-          <van-icon name="cross" @click="deleHistory(idx)"/>
+          <van-icon name="cross" @click.stop="deleHistory(idx)"/>
         </span>
       </van-cell>
     </van-cell-group>
@@ -49,7 +50,6 @@ export default {
   name: 'search',
   data () {
     return {
-      keyword: '',
       searchRes: [],
       historySech: getItem(SEARCH_HISTORY) || []
     }
@@ -87,7 +87,9 @@ export default {
     },
     // 搜索选项中添加到历史记录
     toHistory (idx) {
-      this.addHistoryS(this.searchRes[idx])
+      const keyword = this.searchRes[idx]
+      this.addHistoryS(keyword)
+      this.$router.push(`/search/result?keyword=${keyword}`)
     },
     // 搜索按钮添加历史记录
     searchBtn (val) {

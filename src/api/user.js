@@ -30,3 +30,27 @@ const getProfile = () => {
   })
 }
 export { login, getProfile }
+
+/**
+ * // 关注用户
+ * @param {*} target 关注用户id
+ */
+export const followUser = (target) => {
+  return ajax({
+    method: 'post',
+    url: '/app/v1_0/user/followings',
+    data: {
+      target
+    }
+  })
+}
+/**
+ * // 关注用户
+ * @param {*} target 目标用户（被取消关注的用户id）
+ */
+export const unFollowUser = (target) => {
+  return ajax({
+    method: 'delete',
+    url: '/app/v1_0/user/followings/' + target
+  })
+}

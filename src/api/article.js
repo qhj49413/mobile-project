@@ -29,3 +29,10 @@ export const ajaxReport = (id, type) => {
     }
   })
 }
+// 获取文章详情
+export const getArtDetail = (id) => {
+  return ajax({
+    method: 'GET',
+    url: '/app/v1_0/articles/' + id
+  })
+}
