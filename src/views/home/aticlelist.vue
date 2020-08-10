@@ -18,7 +18,7 @@
             <span>{{item.aut_name}}</span>
             <span>{{item.comm_count}}评论</span>
             <span>{{item.pubdate | relativeFormat}}</span>
-            <van-icon name="cross" v-if="$store.getters.isLogin" @click="popup(item.art_id.toString())"/>
+            <van-icon name="cross" v-if="$store.getters.isLogin" @click.stop="popup(item.art_id.toString())"/>
           </div>
         </div>
       </van-cell>

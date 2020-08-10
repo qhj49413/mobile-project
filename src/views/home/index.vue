@@ -98,7 +98,9 @@ export default {
     hShowMoreAction (data) {
       this.show = true
       this.articleId = data
-      this.$refs.initial.isConceal = false
+      if (this.$refs.initial) {
+        this.$refs.initial.isConceal = false
+      }
     },
     async loadChannel () {
       const { data: { data } } = await getChannel()

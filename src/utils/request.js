@@ -4,6 +4,7 @@
 // (2) 请求，响应拦截器
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router/auth'
 const JSONbig = require('json-bigint')
 
 const instance = axios.create({
@@ -35,6 +36,42 @@ instance.interceptors.request.use(function (config) {
   // 对请求错误做些什么
   return Promise.reject(error)
 })
+// 添加响应拦截器
+instance.interceptors.response.use(function (config) {
+  return config
+}, async function (error) {
+  // 对请求错误做些什么
+  const refreshToken = store.state.tokenInfo.refresh_token
+  if (error.response && error.response.status === 401) {
+    if (refreshToken) {
+      try {
+        const result = await axios({
+          method: 'PUT',
+          url: 'http://ttapi.research.itcast.cn/app/v1_0/authorizations',
+          headers: {
+            Authorization: 'Bearer ' + refreshToken
+          }
+        })
+        const newToken = result.data.data.token
+        store.commit('setToken', {
+          token: newToken,
+          refresh_token: refreshToken
+        })
+        // console.dir(error)
+        // 重发关注或者其他需要token存在时才能发出的请求
+        return instance(error.config)
+      } catch (err) {
+        // 发送请求失败跳转到主页从新登陆
+        router.push(`/login?backto=${router.currentRoute.fullPath}`)
+      }
+    } else {
+      // refreshToken不存在也跳转到主页从新登陆
+      router.push(`/login?backto=${router.currentRoute.fullPath}`)
+    }
+  }
+  return Promise.reject(error)
+})
+
 const instanceSpare = axios.create({
   // 后端备用服务器2
   baseURL: 'http://api-toutiao-web.itheima.net'

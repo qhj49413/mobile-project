@@ -41,13 +41,14 @@
     </div>
     <!-- /文章详情 -->
     <!-- 发表评论 -->
-    <article-comment :results="results"></article-comment>
+    <article-comment :results="results" :artcleId="artcleId"></article-comment>
     <!-- /发表评论 -->
 
   </div>
 </template>
 
 <script>
+// import store from '@/store'
 import { getComments } from '@/api/comment'
 import { followUser, unFollowUser } from '@/api/user'
 import { getArtDetail } from '@/api/article'
@@ -87,6 +88,13 @@ export default {
     async loadArticle () {
       const { data: { data } } = await getArtDetail(this.artcleId)
       this.article = data
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    if (to.path === '/login' && this.$store.state.tokenInfo.token) {
+      next('/')
+    } else {
+      next()
     }
   }
 }

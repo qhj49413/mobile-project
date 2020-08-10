@@ -42,7 +42,7 @@ export default {
   data () {
     return {
       reqParams: {
-        mobile: '13911111111',
+        mobile: '13254185418',
         code: '246810'
       }
       // 验证错误提示
@@ -87,7 +87,7 @@ export default {
         // 会在3s之后关闭
         // todo 登陆成功，跳转
         this.$toast.success('登陆成功')
-        this.$router.push('/')
+        this.$router.push(this.$route.query.backto)
       } catch (err) {
         console.log(err)
         this.$toast.fail('登陆失败')

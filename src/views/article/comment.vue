@@ -24,7 +24,7 @@
           <p style="color: #363636;" v-html="item.content"></p>
           <p>
             <span style="margin-right: 10px;">{{item.pubdate | relativeFormat}}</span>
-            <van-button size="mini" type="default" @click="hCommentReply(item)">回复</van-button>
+            <van-button size="mini" type="default" @click="hCommentReply(item)">回复{{item.reply_count}}</van-button>
           </p>
         </div>
         <van-icon slot="right-icon" name="like-o" />
@@ -45,7 +45,7 @@
     <!-- /发布评论 -->
     <!-- 回复平论 -->
     <van-popup v-model="show" position="bottom" :style="{ height: '85%' }">
-      <comment-reply :currentComment="currentComment"></comment-reply>
+      <comment-reply v-if="show" :currentComment="currentComment" :artcleId="artcleId" @close="show=false"></comment-reply>
     </van-popup>
     <!-- /回复平论 -->
 
@@ -54,12 +54,16 @@
 
 <script>
 import CommentReply from './commentreply'
-import { addComments, getCommentsReply } from '@/api/comment'
+import { addComments } from '@/api/comment'
 export default {
   name: 'ArticleComment',
   props: {
     results: {
       type: Array,
+      required: true
+    },
+    artcleId: {
+      type: String,
       required: true
     }
   },
@@ -79,8 +83,6 @@ export default {
   methods: {
     async hCommentReply (item) {
       this.show = true
-      const result = await getCommentsReply(item.com_id.toString())
-      console.log(result)
       this.currentComment = item
     },
     async hAddComment () {
