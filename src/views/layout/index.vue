@@ -1,7 +1,7 @@
 <template>
 <div class='container'>
   <!-- 顶部导航区域 -->
-  <van-nav-bar fixed>
+  <van-nav-bar fixed v-show="$route.path !== '/user'">
     <div slot="left" class="logo"></div>
     title
     <van-button
@@ -11,7 +11,8 @@
     round
     type="info"
     @click="$router.push('/search')"
-    size="small">搜索</van-button>
+    size="small"
+    >搜索</van-button>
   </van-nav-bar>
 <!-- 中间二级路由区域 -->
 <router-view></router-view>

@@ -23,14 +23,28 @@ const login = (paramsObj) => {
     data: paramsObj
   })
 }
+// 获取用户个人资料
 const getProfile = () => {
   return ajax({
     method: 'get',
     url: '/app/v1_0/user/profile'
   })
 }
-export { login, getProfile }
-
+// 编辑用户个人资料
+export const changeUserInfo = (obj) => {
+  return ajax({
+    method: 'patch',
+    url: '/app/v1_0/user/profile',
+    data: obj
+  })
+}
+// 获取用户自己信息
+export const getUserInfo = () => {
+  return ajax({
+    method: 'get',
+    url: '/app/v1_0/user'
+  })
+}
 /**
  * // 关注用户
  * @param {*} target 关注用户id
@@ -45,7 +59,7 @@ export const followUser = (target) => {
   })
 }
 /**
- * // 关注用户
+ * // 取消关注用户
  * @param {*} target 目标用户（被取消关注的用户id）
  */
 export const unFollowUser = (target) => {
@@ -54,3 +68,5 @@ export const unFollowUser = (target) => {
     url: '/app/v1_0/user/followings/' + target
   })
 }
+
+export { login, getProfile }
