@@ -71,8 +71,9 @@ export default {
   methods: {
     async loadUserInfo () {
       const result = await getUserInfo()
-
       this.userInfo = result.data.data
+      const { id, name, photo } = this.userInfo
+      this.$store.commit('setUser', { id, name, photo })
     }
   }
 }

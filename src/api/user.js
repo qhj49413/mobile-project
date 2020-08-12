@@ -38,6 +38,14 @@ export const changeUserInfo = (obj) => {
     data: obj
   })
 }
+// 编辑用户个人资料头像
+export const changeUserAvatar = fd => {
+  return ajax({
+    method: 'patch',
+    url: '/app/v1_0/user/photo',
+    data: fd
+  })
+}
 // 获取用户自己信息
 export const getUserInfo = () => {
   return ajax({

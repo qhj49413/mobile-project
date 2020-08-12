@@ -53,7 +53,9 @@ export default {
   methods: {
     ...mapMutations(['setToken']),
     async hGetProfile () {
-      await getProfile()
+      const { data: { data } } = await getProfile()
+      const { id, name, photo } = data
+      this.$store.commit('setUser', { id, name, photo })
     },
     async userLogin () {
       // console.log(this.mobile, this.code)
@@ -87,7 +89,8 @@ export default {
         // 会在3s之后关闭
         // todo 登陆成功，跳转
         this.$toast.success('登陆成功')
-        this.$router.push(this.$route.query.backto)
+        this.hGetProfile()
+        this.$router.push(this.$route.query.backto || '/').catch(() => {})
       } catch (err) {
         console.log(err)
         this.$toast.fail('登陆失败')

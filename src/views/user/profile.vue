@@ -9,6 +9,7 @@
 
     <!-- 编辑区 -->
     <van-cell-group>
+      <input type="file" @change="upLoadAvatar" hidden ref="input"/>
       <van-cell is-link title="头像"  center>
         <van-image
           slot="default"
@@ -17,6 +18,7 @@
           fit="cover"
           round
           :src="user.photo"
+          @click="hUpAvatar"
         />
       </van-cell>
         <!-- value： 设置右侧显示的文字 -->
@@ -33,12 +35,24 @@
         @select="changeGender"
       />
       <van-cell is-link title="生日" :value="user.birthday" @click="showBirthday=true"/>
+      <van-popup v-model="showBirthday"  position="bottom" :style="{ height: '30%' }">
+        <van-datetime-picker
+          v-model="newDate"
+          type="date"
+          title="选择年月日"
+          :min-date="minDate"
+          :max-date="maxDate"
+          @cancel="showBirthday=false"
+          @confirm="changeBirthday"
+        />
+      </van-popup>
     </van-cell-group>
   </div>
 </template>
 
 <script>
-import { getProfile, changeUserInfo } from '@/api/user'
+import dayjs from 'dayjs'
+import { getProfile, changeUserInfo, changeUserAvatar } from '@/api/user'
 export default {
   name: 'userProfile',
   data () {
@@ -56,14 +70,37 @@ export default {
       newName: '',
       // 修改后新生日
       newDate: new Date(),
-      minDate: new Date(1965, 0, 10), // dateTime-picker中最小时间
-      maxDate: new Date() // 当前时间
+      minDate: new Date(2000, 0, 10), // dateTime-picker中最小时间
+      maxDate: new Date(), // 当前时间,
+      birthday: null
     }
   },
   created () {
     this.loadInfo()
   },
   methods: {
+    async changeBirthday (value) {
+      const birthday = dayjs(value).format('YYYY-MM-DD')
+      await changeUserInfo({ birthday })
+      this.user.birthday = birthday
+      this.showBirthday = false
+    },
+    // 绑定点击事件到图片上
+    hUpAvatar () {
+      this.$refs.input.click()
+    },
+    // 上传头像发请求
+    async upLoadAvatar () {
+      const file = this.$refs.input.files[0]
+      const fd = new FormData()
+      fd.append('photo', file)
+      // console.log(fd)
+      const { data: { data } } = await changeUserAvatar(fd)
+      // result.data.data.photo
+      this.$store.commit('setUserAvatar', data.photo)
+      // console.log(result)
+      this.user.photo = data.photo
+    },
     async changeGender (action, index) {
       const idx = index.toString()
       await changeUserInfo({ gender: idx })
@@ -79,7 +116,7 @@ export default {
       const result = await getProfile()
       this.user = result.data.data
       this.newName = this.user.name
-      console.log(this.user)
+      // console.log(this.user)
     }
   }
 }
